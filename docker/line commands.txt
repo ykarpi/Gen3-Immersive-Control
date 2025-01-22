@@ -1,0 +1,45 @@
+
+--------------- LAUNCH COMMANDS --------------------------
+
+roslaunch ros_tcp_endpoint endpoint.launch
+
+roslaunch kortex_driver kortex_driver.launch ip_address:=192.168.0.10 dof:=6
+
+roslaunch kortex_description visualize.launch dof:=6
+
+roslaunch kinova_vision kinova_vision_rgbd.launch device:=192.168.0.10
+
+
+
+
+
+------------- Connect Python 2 & 3 -----------
+sudo ln -s /usr/bin/python3 /usr/bin/python
+
+
+------------- Image & container in docker commands --------------
+
+# Build an image:
+docker-compose build
+
+# After building an image, use the following:
+docker run -it -p 10000:10000 IMAGE_NAME /bin/bash
+
+
+------------- START COMMANDS ----
+
+docketr ps -a
+
+docker exec -it CONTAINER_ID /bin/bash
+
+cd ~/catkin_workspace
+
+source devel/setup.bash
+
+
+docker stop CONTAINER_ID
+
+
+------------ display --------------
+export DISPLAY=host.docker.internal:0
+

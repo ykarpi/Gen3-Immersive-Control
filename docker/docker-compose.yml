@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  ros_noetic_kinova:
+    build:
+      context: .  # Build context, where your Dockerfile is located
+      dockerfile: ./Dockerfile
+    container_name: ros_noetic_kinova_kortex
+    environment:
+      - DISPLAY=host.docker.internal:0  # Forward display to Windows X11 server
+      - QT_X11_NO_MITSHM=1
+    ports:
+      - "11311:11311"  # ROS master port
+      - "10000:10000" # Map port 10000 (for Unity TCP connection)
+    stdin_open: true
+    tty: true
