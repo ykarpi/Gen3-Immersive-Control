@@ -14,7 +14,7 @@ public class GhostModelJointController : MonoBehaviour
     private bool[] manualControl = new bool[6];  // Track if a joint is being manually controlled
     private bool isSynchronized = false;  // Flag to check if synchronization has been completed
 
-    // Define the joint limits
+    // Define the joint limits - according to the official documentation
     private float[] actuatorLimitsMin = new float[] { -180f, -128.9f, -147.8f, -180f, -120.3f, -180f };
     private float[] actuatorLimitsMax = new float[] { 180f, 128.9f, 147.8f, 180f, 120.3f, 180f };
 
