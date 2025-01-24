@@ -24,8 +24,9 @@ RUN python3 -m pip install conan==1.59 && \
 RUN mkdir -p /root/catkin_workspace/src && \
     cd /root/catkin_workspace/src && \
     git clone -b noetic-devel https://github.com/Kinovarobotics/ros_kortex.git && \
+    git clone https://github.com/Kinovarobotics/ros_kortex_vision.git && \
     git clone https://github.com/Unity-Technologies/ROS-TCP-Endpoint.git && \
-    git clone https://github.com/Kinovarobotics/ros_kortex_vision.git
+    git clone https://github.com/moveit/moveit.git
 
 # Bootstrap rosdep
 RUN apt-get update && \
