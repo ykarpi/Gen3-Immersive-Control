@@ -1,16 +1,17 @@
 
 --------------- LAUNCH COMMANDS --------------------------
 
-roslaunch ros_tcp_endpoint endpoint.launch
-
+Without gripper:
 roslaunch kortex_driver kortex_driver.launch ip_address:=192.168.0.10 dof:=6
 
-roslaunch kortex_description visualize.launch dof:=6
+With gripper:
+roslaunch kortex_driver kortex_driver.launch ip_address:=192.168.0.10 dof:=6 gripper:=robotiq_2f_85
 
 roslaunch kinova_vision kinova_vision_rgbd.launch device:=192.168.0.10
 
+roslaunch ros_tcp_endpoint endpoint.launch
 
-
+roslaunch kortex_description visualize.launch dof:=6
 
 
 ------------- Connect Python 2 & 3 -----------
