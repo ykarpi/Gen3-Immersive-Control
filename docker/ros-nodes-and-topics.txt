@@ -25,6 +25,69 @@ root@9d3248cfb2e3:~/catkin_workspace# rosnode list
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+root@9d3248cfb2e3:~/catkin_workspace# rosnode info /my_gen3/robot_state_publisher
+--------------------------------------------------------------------------------
+Node [/my_gen3/robot_state_publisher]
+Publications:
+ * /rosout [rosgraph_msgs/Log]
+ * /tf [tf2_msgs/TFMessage]
+ * /tf_static [tf2_msgs/TFMessage]
+
+Subscriptions:
+ * /my_gen3/joint_states [sensor_msgs/JointState]
+
+Services:
+ * /my_gen3/robot_state_publisher/get_loggers
+ * /my_gen3/robot_state_publisher/set_logger_level
+
+
+contacting node http://9d3248cfb2e3:40741/ ...
+Pid: 12674
+Connections:
+ * topic: /rosout
+    * to: /rosout
+    * direction: outbound (37463 - 172.18.0.2:55708) [13]
+    * transport: TCPROS
+ * topic: /tf
+    * to: /my_gen3/move_group
+    * direction: outbound (37463 - 172.18.0.2:55724) [15]
+    * transport: TCPROS
+ * topic: /tf
+    * to: /my_gen3/rviz
+    * direction: outbound (37463 - 172.18.0.2:55752) [18]
+    * transport: TCPROS
+ * topic: /tf
+    * to: /camera/camera_nodelet_manager
+    * direction: outbound (37463 - 172.18.0.2:38244) [19]
+    * transport: TCPROS
+ * topic: /tf
+    * to: /my_gen3/move_group_commander_wrappers_1738029965274164365
+    * direction: outbound (37463 - 172.18.0.2:38282) [22]
+    * transport: TCPROS
+ * topic: /tf_static
+    * to: /my_gen3/move_group
+    * direction: outbound (37463 - 172.18.0.2:55738) [16]
+    * transport: TCPROS
+ * topic: /tf_static
+    * to: /my_gen3/rviz
+    * direction: outbound (37463 - 172.18.0.2:55748) [17]
+    * transport: TCPROS
+ * topic: /tf_static
+    * to: /camera/camera_nodelet_manager
+    * direction: outbound (37463 - 172.18.0.2:38254) [20]
+    * transport: TCPROS
+ * topic: /tf_static
+    * to: /my_gen3/move_group_commander_wrappers_1738029965274164365
+    * direction: outbound (37463 - 172.18.0.2:38266) [21]
+    * transport: TCPROS
+ * topic: /my_gen3/joint_states
+    * to: /my_gen3/joint_state_publisher (http://9d3248cfb2e3:38289/)
+    * direction: inbound (55766 - 9d3248cfb2e3:34957) [11]
+    * transport: TCPROS
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 root@9d3248cfb2e3:~/catkin_workspace# rosnode info /my_gen3/joint_state_publisher
 --------------------------------------------------------------------------------
 Node [/my_gen3/joint_state_publisher]
@@ -64,6 +127,37 @@ Connections:
     * direction: inbound
     * transport: TCPROS
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+root@9d3248cfb2e3:~/catkin_workspace# rosnode info /my_gen3/unity_to_gen3
+--------------------------------------------------------------------------------
+Node [/my_gen3/unity_to_gen3]
+Publications:
+ * /my_gen3/move_group/display_planned_path [moveit_msgs/DisplayTrajectory]
+ * /rosout [rosgraph_msgs/Log]
+
+Subscriptions:
+ * /unity/my_gen3/cartesian_position [unknown type]
+ * /unity/my_gen3/joint_positions [unknown type]
+ * /unity/my_gen3/named_robot_position [unknown type]
+
+Services:
+ * /my_gen3/unity_to_gen3/get_loggers
+ * /my_gen3/unity_to_gen3/set_logger_level
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+root@9d3248cfb2e3:~/catkin_workspace# rostopic info /my_gen3/move_group/display_planned_path
+Type: moveit_msgs/DisplayTrajectory
+
+Publishers:
+ * /my_gen3/move_group (http://9d3248cfb2e3:33555/)
+ * /my_gen3/unity_to_gen3 (http://9d3248cfb2e3:46599/)
+
+Subscribers:
+ * /my_gen3/rviz (http://9d3248cfb2e3:37601/)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
