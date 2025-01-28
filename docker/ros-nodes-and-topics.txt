@@ -1,0 +1,116 @@
+root@9d3248cfb2e3:~/catkin_workspace# rosnode list
+/camera/camera_color_tf_publisher
+/camera/camera_depth_tf_publisher
+/camera/camera_nodelet_manager
+/camera/color/kinova_vision_color
+/camera/color_rectify_color
+/camera/depth/kinova_vision_depth
+/camera/depth_metric
+/camera/depth_metric_rect
+/camera/depth_points
+/camera/depth_rectify_depth
+/camera/depth_registered_sw_metric_rect
+/camera/points_xyzrgb_sw_registered
+/camera/register_depth_color
+/my_gen3/joint_state_publisher
+/my_gen3/move_group
+/my_gen3/move_group_commander_wrappers_1738020367240013903
+/my_gen3/my_gen3_driver
+/my_gen3/robot_state_publisher
+/my_gen3/rviz
+/my_gen3/unity_to_gen3
+/rosout
+/unity_endpoint
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+root@9d3248cfb2e3:~/catkin_workspace# rosnode info /my_gen3/joint_state_publisher
+--------------------------------------------------------------------------------
+Node [/my_gen3/joint_state_publisher]
+Publications:
+ * /my_gen3/joint_states [sensor_msgs/JointState]
+ * /rosout [rosgraph_msgs/Log]
+
+Subscriptions:
+ * /my_gen3/base_feedback/joint_state [sensor_msgs/JointState]
+
+Services:
+ * /my_gen3/joint_state_publisher/get_loggers
+ * /my_gen3/joint_state_publisher/set_logger_level
+
+
+contacting node http://9d3248cfb2e3:42513/ ...
+Pid: 12633
+Connections:
+ * topic: /rosout
+    * to: /rosout
+    * direction: outbound (35685 - 172.18.0.2:60344) [9]
+    * transport: TCPROS
+ * topic: /my_gen3/joint_states
+    * to: /my_gen3/robot_state_publisher
+    * direction: outbound (35685 - 172.18.0.2:60350) [7]
+    * transport: TCPROS
+ * topic: /my_gen3/joint_states
+    * to: /my_gen3/move_group
+    * direction: outbound (35685 - 172.18.0.2:60354) [12]
+    * transport: TCPROS
+ * topic: /my_gen3/joint_states
+    * to: /unity_endpoint
+    * direction: outbound (35685 - 172.18.0.2:55556) [13]
+    * transport: TCPROS
+ * topic: /my_gen3/base_feedback/joint_state
+    * to: /my_gen3/my_gen3_driver (http://9d3248cfb2e3:39371/)
+    * direction: inbound
+    * transport: TCPROS
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+root@9d3248cfb2e3:~/catkin_workspace# rostopic info /camera/color/image_rect_color
+Type: sensor_msgs/Image
+
+Publishers:
+ * /camera/camera_nodelet_manager (http://9d3248cfb2e3:42665/)
+
+Subscribers:
+ * /unity_endpoint (http://9d3248cfb2e3:42011/)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+root@9d3248cfb2e3:~/catkin_workspace# rostopic info /my_gen3/joint_states
+Type: sensor_msgs/JointState
+
+Publishers:
+ * /my_gen3/joint_state_publisher (http://9d3248cfb2e3:42513/)
+
+Subscribers:
+ * /my_gen3/robot_state_publisher (http://9d3248cfb2e3:34495/)
+ * /my_gen3/move_group (http://9d3248cfb2e3:46719/)
+ * /unity_endpoint (http://9d3248cfb2e3:42011/)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[APPLICABLE FOR "/my_gen3/in/clear_faults", "/my_gen3/in/stop", "/my_gen3/in/emergency_stop"]
+
+root@9d3248cfb2e3:~/catkin_workspace# rostopic info /my_gen3/in/stop
+Type: std_msgs/Empty
+
+Publishers:
+ * /unity_endpoint (http://9d3248cfb2e3:42011/)
+
+Subscribers:
+ * /my_gen3/my_gen3_driver (http://9d3248cfb2e3:39371/)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+root@9d3248cfb2e3:~/catkin_workspace# rostopic info /unity/my_gen3/named_robot_position
+Type: std_msgs/String
+
+Publishers:
+ * /unity_endpoint (http://9d3248cfb2e3:42011/)
+
+Subscribers:
+ * /my_gen3/unity_to_gen3 (http://9d3248cfb2e3:37245/)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
