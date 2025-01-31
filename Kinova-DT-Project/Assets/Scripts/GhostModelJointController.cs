@@ -44,8 +44,11 @@ public class GhostModelJointController : MonoBehaviour
                 // Get the current joint position from the real Kinova model
                 float kinovaPosition = kinovaArticulationChain[i].xDrive.target;
 
+                // Debug log to check kinovaPosition
+                Debug.Log($"Kinova joint {i} position: {kinovaPosition}");
+
                 // Update the ghost model's joint to match the Kinova model's position
-                ArticulationBody ghostJoint = ghostArticulationChain[i+1];
+                ArticulationBody ghostJoint = ghostArticulationChain[i];  // Fixed indexing here
                 ArticulationDrive ghostDrive = ghostJoint.xDrive;
                 ghostDrive.target = kinovaPosition;
                 ghostJoint.xDrive = ghostDrive;
@@ -59,7 +62,6 @@ public class GhostModelJointController : MonoBehaviour
         }
     }
 
-
     // Sync ghost model's joints with Kinova model at the start
     void SyncGhostWithKinova()
     {
@@ -67,6 +69,9 @@ public class GhostModelJointController : MonoBehaviour
         {
             // Initialize position by reading the Kinova joint's target
             float kinovaPosition = kinovaArticulationChain[i].xDrive.target;
+
+            // Debug log to check initial kinovaPosition
+            Debug.Log($"Syncing Kinova joint {i} position: {kinovaPosition}");
 
             // Set the ghost model's joints to the same position
             ArticulationBody ghostJoint = ghostArticulationChain[i];
@@ -85,6 +90,7 @@ public class GhostModelJointController : MonoBehaviour
     // Function to map the joint position to the slider value (normalized between 0 and 1)
     private void SetSliderValue(int jointIndex, float currentPosition)
     {
+        Debug.Log(currentPosition);
         float rangeMin = actuatorLimitsMin[jointIndex];
         float rangeMax = actuatorLimitsMax[jointIndex];
 
@@ -92,7 +98,7 @@ public class GhostModelJointController : MonoBehaviour
         float normalizedValue = Mathf.InverseLerp(rangeMin, rangeMax, currentPosition);
 
         // Debugging to ensure correct mapping
-      //  Debug.Log($"Setting slider for joint {jointIndex}: Value = {normalizedValue} (Range: {rangeMin} to {rangeMax})");
+        //Debug.Log($"Setting slider for joint {jointIndex}: Value = {normalizedValue} (Range: {rangeMin} to {rangeMax})");
 
         // Set the slider value based on the normalized value
         jointSliders[jointIndex].value = normalizedValue;
@@ -121,7 +127,7 @@ public class GhostModelJointController : MonoBehaviour
             ghostJoint.xDrive = ghostDrive;
 
             // Debug to confirm xDrive updates
-            Debug.Log($"Updating ghost joint {i}. Old target: {ghostDrive.target}, New target: {targetPosition}");
+            //Debug.Log($"Updating ghost joint {i}. Old target: {ghostDrive.target}, New target: {targetPosition}");
 
             // Mark the joint as manually controlled
             manualControl[i] = true;
@@ -145,3 +151,4 @@ public class GhostModelJointController : MonoBehaviour
         isSynchronized = true;
     }
 }
+

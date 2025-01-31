@@ -1,97 +1,86 @@
+using RosMessageTypes.Sensor;
 using Unity.Robotics.ROSTCPConnector;
 using UnityEngine;
-using UnityEngine.UI; // For UI components like Button
-using RosMessageTypes.Sensor;
+using UnityEngine.UI;
 
 public class KinovaCameraStream : MonoBehaviour
 {
     [SerializeField] private Renderer targetRenderer; // Assign the quad's renderer in Unity
-    [SerializeField] private Button toggleStreamButton; // Assign a UI Button in Unity
-    [SerializeField] private Color activeColor = Color.green; // Color when the button is active
-    [SerializeField] private Color inactiveColor = Color.red; // Color when the button is inactive
+    [SerializeField] private Button StreamOnButton;
+    [SerializeField] private Button StreamOffButton;
 
     private Texture2D texture;
-    private bool isStreaming = false; // Tracks whether streaming is enabled
-    private Image buttonImage; // Reference to the button's Image component
+    private bool isStreaming = false;
 
     void Start()
     {
-        // Ensure a Renderer is assigned
         if (targetRenderer == null)
         {
             Debug.LogError("Target Renderer is not assigned in the Inspector!");
             return;
         }
 
-        // Ensure the button is assigned
-        if (toggleStreamButton == null)
+        if (StreamOnButton == null || StreamOffButton == null)
         {
-            Debug.LogError("Toggle Stream Button is not assigned in the Inspector!");
+            Debug.LogError("Stream On/Off buttons are not assigned in the Inspector!");
             return;
         }
 
-        // Get the button's image component for visual feedback
-        buttonImage = toggleStreamButton.GetComponent<Image>();
-        if (buttonImage == null)
-        {
-            Debug.LogError("The Button does not have an Image component!");
-            return;
-        }
+        // Assign button listeners
+        StreamOnButton.onClick.AddListener(StartStream);
+        StreamOffButton.onClick.AddListener(StopStream);
 
-        // Set the button's initial color
-        buttonImage.color = inactiveColor;
-
-        // Initialize the button's listener
-        toggleStreamButton.onClick.AddListener(ToggleStream);
-
-        // Initialize ROS connection (but do not subscribe yet)
+        // Initialize ROS connection
         ROSConnection.GetOrCreateInstance();
+
+        // Ensure the quad is hidden at the start
+        targetRenderer.gameObject.SetActive(false);
     }
 
-    void ToggleStream()
+    void StartStream()
     {
-        // Toggle the streaming state
-        isStreaming = !isStreaming;
-
         if (isStreaming)
-        {
-            // Subscribe to the camera topic
-            ROSConnection.GetOrCreateInstance().Subscribe<ImageMsg>("/camera/color/image_rect_color", DisplayImage);
-            targetRenderer.material.mainTexture = null; // Clear any old textures
-            buttonImage.color = activeColor; // Change button color to active
-            Debug.Log("Streaming started.");
-        }
-        else
-        {
-            // Stop streaming
-            targetRenderer.material.mainTexture = null; // Clear the quad's texture
-            buttonImage.color = inactiveColor; // Change button color to inactive
-            Debug.Log("Streaming stopped.");
-        }
+            return;
+
+        isStreaming = true;
+        targetRenderer.gameObject.SetActive(true); // Show the quad
+
+        ROSConnection.GetOrCreateInstance().Subscribe<ImageMsg>("/camera/color/image_rect_color", DisplayImage);
+        targetRenderer.material.mainTexture = null; // Clear previous texture
+        Debug.Log("Streaming started.");
+    }
+
+    void StopStream()
+    {
+        if (!isStreaming)
+            return;
+
+        isStreaming = false;
+        ROSConnection.GetOrCreateInstance().Unsubscribe("/camera/color/image_rect_color");
+
+        targetRenderer.material.mainTexture = null; // Clear the displayed texture
+        targetRenderer.gameObject.SetActive(false); // Hide the quad
+        Debug.Log("Streaming stopped.");
     }
 
     void DisplayImage(ImageMsg imageMsg)
     {
-        // Only process if streaming is enabled
         if (!isStreaming)
             return;
 
-        // Check if texture is already created
-        if (texture == null)
+        if (texture == null || texture.width != (int)imageMsg.width || texture.height != (int)imageMsg.height)
         {
             texture = new Texture2D((int)imageMsg.width, (int)imageMsg.height, TextureFormat.RGB24, false);
-            targetRenderer.material.mainTexture = texture; // Assign texture to material
+            targetRenderer.material.mainTexture = texture;
         }
 
-        // Validate image data size
-        int expectedDataSize = (int)(imageMsg.width * imageMsg.height * 3); // RGB = 3 bytes per pixel
+        int expectedDataSize = (int)(imageMsg.width * imageMsg.height * 3);
         if (imageMsg.data.Length != expectedDataSize)
         {
             Debug.LogError($"Image data size mismatch! Expected {expectedDataSize} bytes, but got {imageMsg.data.Length} bytes.");
             return;
         }
 
-        // Load image data into the texture
         texture.LoadRawTextureData(imageMsg.data);
         texture.Apply();
     }
