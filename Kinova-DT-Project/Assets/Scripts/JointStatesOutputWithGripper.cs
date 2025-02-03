@@ -12,18 +12,18 @@ public class JointStatesOutputWithGripper : MonoBehaviour
     [SerializeField]
     GameObject kinova6dof;
 
-    [SerializeField]
-    GameObject right_outer_knuckle_6dof;
-    [SerializeField]
-    GameObject right_inner_knuckle_6dof;
-    [SerializeField]
-    GameObject left_outer_knuckle_6dof;
-    [SerializeField]
-    GameObject left_inner_knuckle_6dof;
-    [SerializeField]
-    GameObject right_inner_finger_6dof;
-    [SerializeField]
-    GameObject left_inner_finger_6dof;
+    //[SerializeField]
+    //GameObject right_outer_knuckle_6dof;
+    //[SerializeField]
+    //GameObject right_inner_knuckle_6dof;
+    //[SerializeField]
+    //GameObject left_outer_knuckle_6dof;
+    //[SerializeField]
+    //GameObject left_inner_knuckle_6dof;
+    //[SerializeField]
+    //GameObject right_inner_finger_6dof;
+    //[SerializeField]
+    //GameObject left_inner_finger_6dof;
 
 
     private ArticulationBody joint6dof;
@@ -44,12 +44,12 @@ public class JointStatesOutputWithGripper : MonoBehaviour
         ROSConnection.GetOrCreateInstance().Subscribe<Joint>("my_gen3/joint_states", UpdateJoints6dof);
         articulationChain6dof = kinova6dof.GetComponentsInChildren<ArticulationBody>();
 
-        articulationChain6dof[7] = right_outer_knuckle_6dof.GetComponent<ArticulationBody>();
-        articulationChain6dof[8] = right_inner_knuckle_6dof.GetComponent<ArticulationBody>();
-        articulationChain6dof[9] = left_inner_finger_6dof.GetComponent<ArticulationBody>();
-        articulationChain6dof[10] = left_outer_knuckle_6dof.GetComponent<ArticulationBody>();
-        articulationChain6dof[11] = left_inner_knuckle_6dof.GetComponent<ArticulationBody>();
-        articulationChain6dof[12] = right_inner_finger_6dof.GetComponent<ArticulationBody>();
+        //articulationChain6dof[7] = right_outer_knuckle_6dof.GetComponent<ArticulationBody>();
+        //articulationChain6dof[8] = right_inner_knuckle_6dof.GetComponent<ArticulationBody>();
+        //articulationChain6dof[9] = left_inner_finger_6dof.GetComponent<ArticulationBody>();
+        //articulationChain6dof[10] = left_outer_knuckle_6dof.GetComponent<ArticulationBody>();
+        //articulationChain6dof[11] = left_inner_knuckle_6dof.GetComponent<ArticulationBody>();
+        //articulationChain6dof[12] = right_inner_finger_6dof.GetComponent<ArticulationBody>();
     }
 
 
@@ -57,7 +57,7 @@ public class JointStatesOutputWithGripper : MonoBehaviour
     {
         if (Time.time > 1)
         {
-            for (int i = 0; i < 13; i++)
+            for (int i = 0; i < 7; i++)
             {
                 joint6dof = articulationChain6dof[i + 1];
                 ArticulationDrive currentDrive = joint6dof.xDrive;
@@ -101,24 +101,24 @@ public class JointStatesOutputWithGripper : MonoBehaviour
             prevPos6dof[i] = currPos6dof[i];
         }
 
-        // Process gripper joints
-        float fingerPosition = (float)(jointMessage.position[6] * 180.0 / Math.PI);
+        //// Process gripper joints
+        //float fingerPosition = (float)(jointMessage.position[6] * 180.0 / Math.PI);
 
-        for (int i = 7; i < 10; i++) // Left fingers
-        {
-            joint6dof = articulationChain6dof[i];
-            ArticulationDrive currentDrive = joint6dof.xDrive;
-            currentDrive.target = fingerPosition;
-            joint6dof.xDrive = currentDrive;
-        }
+        //for (int i = 7; i < 10; i++) // Left fingers
+        //{
+        //    joint6dof = articulationChain6dof[i];
+        //    ArticulationDrive currentDrive = joint6dof.xDrive;
+        //    currentDrive.target = fingerPosition;
+        //    joint6dof.xDrive = currentDrive;
+        //}
 
-        for (int i = 10; i < 13; i++) // Right fingers (mirrored movement)
-        {
-            joint6dof = articulationChain6dof[i];
-            ArticulationDrive currentDrive = joint6dof.xDrive;
-            currentDrive.target = -fingerPosition;
-            joint6dof.xDrive = currentDrive;
-        }
+        //for (int i = 10; i < 13; i++) // Right fingers (mirrored movement)
+        //{
+        //    joint6dof = articulationChain6dof[i];
+        //    ArticulationDrive currentDrive = joint6dof.xDrive;
+        //    currentDrive.target = -fingerPosition;
+        //    joint6dof.xDrive = currentDrive;
+        //}
     }
 
     //// Right knuckles: negative, left: positive
