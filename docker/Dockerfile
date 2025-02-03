@@ -28,6 +28,9 @@ RUN mkdir -p /root/catkin_workspace/src && \
     git clone https://github.com/Unity-Technologies/ROS-TCP-Endpoint.git && \
     git clone https://github.com/moveit/moveit.git
 
+# Copy python_scripts folder
+COPY python_scripts /root/catkin_workspace/src/python_scripts
+
 # Bootstrap rosdep
 RUN apt-get update && \
     apt-get install -y ros-noetic-gazebo-ros && \

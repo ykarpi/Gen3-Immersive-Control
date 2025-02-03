@@ -1,11 +1,10 @@
 version: "3.8"
-
 services:
-  ros_noetic_kinova:
+  ros_noetic_gen3:
     build:
       context: .  # Build context, where your Dockerfile is located
       dockerfile: ./Dockerfile
-    container_name: ros_noetic_kinova_kortex
+    container_name: ros_noetic_kortex_gen3
     environment:
       - DISPLAY=host.docker.internal:0  # Forward display to Windows X11 server
       - QT_X11_NO_MITSHM=1
