@@ -1,9 +1,5 @@
-<robot name="robotiq_arg2f_85_model">  
-<joint name="robotiq_85_base_joint" type="fixed">
-    <parent link="EndEffector_Link"/>
-    <child link="robotiq_85_base_link"/>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-  </joint>
+<robot
+  name="robotiq_arg85_description">
   <link
     name="robotiq_85_base_link">
     <inertial>
@@ -28,7 +24,8 @@
         <mesh
           filename="package://robotiq_arg85_description/meshes/robotiq_85_base_link_fine.STL" />
       </geometry>
-      <material name="Dark_Gray">
+      <material
+        name="">
         <color
           rgba="0.1 0.1 0.1 1" />
       </material>
@@ -67,7 +64,8 @@
         <mesh
           filename="package://robotiq_arg85_description/meshes/outer_knuckle_fine.STL" />
       </geometry>
-      <material name="Dark_Gray">
+      <material
+        name="">
         <color
           rgba="0.1 0.1 0.1 1" />
       </material>
@@ -83,7 +81,7 @@
     </collision>
   </link>
   <joint
-    name="left_outer_knuckle_joint"
+    name="finger_joint"
     type="revolute">
     <origin
       xyz="0.0306011444260539 0 0.0627920162695395"
@@ -95,8 +93,8 @@
     <axis
       xyz="0 -1 0" />
     <limit
-      lower="-0.8757"
-      upper="0.8757"
+	  lower="0"
+      upper="0.725"
       velocity="2.0"
       effort="1000" />
   </joint>
@@ -124,7 +122,8 @@
         <mesh
           filename="package://robotiq_arg85_description/meshes/outer_finger_fine.STL" />
       </geometry>
-      <material name="Dark_Gray">
+      <material
+        name="">
         <color
           rgba="0.1 0.1 0.1 1" />
       </material>
@@ -176,7 +175,8 @@
         <mesh
           filename="package://robotiq_arg85_description/meshes/inner_knuckle_fine.STL" />
       </geometry>
-      <material name="Dark_Gray">
+      <material
+        name="">
         <color
           rgba="0.1 0.1 0.1 1" />
       </material>
@@ -204,10 +204,14 @@
     <axis
       xyz="0 -1 0" />
     <limit
-      lower="-0.8757"
+      lower="0"
       upper="0.8757"
       velocity="2.0"
       effort="1000" />
+    <mimic 
+      joint="finger_joint"
+      multiplier="1"
+      offset="0" />
   </joint>
   <link
     name="left_inner_finger">
@@ -233,7 +237,8 @@
         <mesh
           filename="package://robotiq_arg85_description/meshes/inner_finger_fine.STL" />
       </geometry>
-      <material name="Dark_Gray">
+      <material
+        name="">
         <color
           rgba="0.1 0.1 0.1 1" />
       </material>
@@ -261,10 +266,14 @@
     <axis
       xyz="0 -1 0" />
     <limit
-      lower="-0.8757"
+      lower="0"
       upper="0.8757"
       velocity="2.0"
       effort="1000" />
+    <mimic 
+      joint="finger_joint"
+      multiplier="-1"
+      offset="0" />
   </joint>
   <link
     name="right_inner_knuckle">
@@ -290,7 +299,8 @@
         <mesh
           filename="package://robotiq_arg85_description/meshes/inner_knuckle_fine.STL" />
       </geometry>
-      <material name="Dark_Gray">
+      <material
+        name="">
         <color
           rgba="0.1 0.1 0.1 1" />
       </material>
@@ -318,10 +328,14 @@
     <axis
       xyz="0 1 0" />
     <limit
-      lower="-0.8757"
+      lower="0"
       upper="0.8757"
       velocity="2.0"
       effort="1000" />
+    <mimic 
+      joint="finger_joint"
+      multiplier="-1"
+      offset="0" />
   </joint>
   <link
     name="right_inner_finger">
@@ -347,7 +361,8 @@
         <mesh
           filename="package://robotiq_arg85_description/meshes/inner_finger_fine.STL" />
       </geometry>
-      <material name="Dark_Gray">
+      <material
+        name="">
         <color
           rgba="0.1 0.1 0.1 1" />
       </material>
@@ -375,10 +390,14 @@
     <axis
       xyz="0 1 0" />
     <limit
-      lower="-0.8757"
+      lower="0"
       upper="0.8757"
       velocity="2.0"
       effort="1000" />
+    <mimic 
+      joint="finger_joint"
+      multiplier="1"
+      offset="0" />
   </joint>
   <link
     name="right_outer_knuckle">
@@ -404,7 +423,8 @@
         <mesh
           filename="package://robotiq_arg85_description/meshes/outer_knuckle_fine.STL" />
       </geometry>
-      <material name="Dark_Gray">
+      <material
+        name="">
         <color
           rgba="0.1 0.1 0.1 1" />
       </material>
@@ -432,10 +452,14 @@
     <axis
       xyz="0 1 0" />
     <limit
-      lower="-0.8757"
+      lower="0"
       upper="0.8757"
       velocity="2.0"
       effort="1000" />
+    <mimic 
+      joint="finger_joint"
+      multiplier="-1"
+      offset="0" />
   </joint>
   <link
     name="right_outer_finger">
@@ -461,7 +485,8 @@
         <mesh
           filename="package://robotiq_arg85_description/meshes/outer_finger_fine.STL" />
       </geometry>
-      <material name="Dark_Gray">
+      <material
+        name="">
         <color
           rgba="0.1 0.1 0.1 1" />
       </material>
