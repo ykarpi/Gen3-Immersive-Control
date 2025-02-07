@@ -63,6 +63,12 @@ docker exec -it CONTAINER_ID /bin/bash
 docker stop CONTAINER_ID
 ```
 
+# To do list:
+- [ ] Docker multicontainer distribution
+- [ ] Finalize gripper & virtual twin functionality in Unity
+- [ ] Implement Cartesian-based control
+- [ ] Add ROS2 implementation
+- [ ] Integrate Clearpath Jackal into the network
 
 
 
