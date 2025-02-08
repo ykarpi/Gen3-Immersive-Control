@@ -1,5 +1,13 @@
+# ROS-Docker Framework for Digital Twin Applications
 
-# Build an image:
+general overview - what the project is about + how it works
+
+## Installation
+Note: Please use the main branch if you clone the repository, other branches are currently used for development.
+
+breif intro on used setup & technologies
+
+#### Build an image:
 ```shell
 docker-compose build
 ```
@@ -12,7 +20,7 @@ Alternatively: after building an image, use the following:
 ```shell
 docker run -it -p 10000:10000 IMAGE_NAME /bin/bash
 ```
-# Launch commands:
+#### Launch commands:
 
 Assuming you are in the ~/catkin_workpsace envrionment: 
 
@@ -38,12 +46,13 @@ Optionally (separatly) you can launch the following to just view the robot in RV
 roslaunch kortex_description visualize.launch dof:=6
 ```
 
-# Display Forwarding 
+#### Issues and other Docker commands
+
 display forwarding:
 ```shell
 export DISPLAY=host.docker.internal:0
 ```
-# Other Docker commands
+
 (i) To check all containers, including running, stopped and exited ones:
 ```shell
 docker ps -a
@@ -63,12 +72,15 @@ docker exec -it CONTAINER_ID /bin/bash
 docker stop CONTAINER_ID
 ```
 
-# To do list:
-- [ ] Docker multicontainer distribution
+## Unity
+- Discuss Unity implementation and Interactions
+
+## TODO list:
+- [ ] Update docker-compose with entrypoints (and hence replace the launch commands)
+- [ ] Docker multicontainer distribution (run kortex_vision from a separate container)
 - [ ] Finalize gripper & virtual twin functionality in Unity
-- [ ] Implement Cartesian-based control
+- [ ] Implement Cartesian-based control for Gen3 in Unity
 - [ ] Add ROS2 implementation
-- [ ] Integrate Clearpath Jackal into the network
 
 
 
