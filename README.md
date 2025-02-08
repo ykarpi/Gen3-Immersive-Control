@@ -66,12 +66,16 @@ Optionally (separatly) you can launch the following to just view the robot in RV
 roslaunch kortex_description visualize.launch dof:=6
 ```
 
-#### Issues and other Docker commands
+#### Display Forwarding
 
 display forwarding:
 ```shell
 export DISPLAY=host.docker.internal:0
 ```
+
+explain the X server --> installation + setting up
+
+#### Docker commands
 
 (i) To check all containers, including running, stopped and exited ones:
 ```shell
