@@ -12,7 +12,6 @@ public class JointStatesOutput : MonoBehaviour
     [SerializeField] GameObject kinova6dof;
     private double[] prevPos6dof = new double[6];
     private double[] currPos6dof = new double[6];
-    private int joints_length;
 
     private ArticulationBody joint6dof;
 
@@ -38,8 +37,6 @@ public class JointStatesOutput : MonoBehaviour
                 ArticulationDrive currentDrive = joint6dof.xDrive;
                 currentDrive.stiffness = 1e+10f;
                 articulationChain6dof[i + 1].xDrive = currentDrive;
-
-
             }
         }
     }
@@ -61,9 +58,6 @@ public class JointStatesOutput : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             currPos6dof[i] = (currPos6dof[i] / Math.PI * 180);
-            //Debug.Log("Joint #" + i + "--> " + currPos6dof[i]);
-
-
             if (currPos6dof[i] - prevPos6dof[i] > 300)
             {
                 rev6dof[i]--;
@@ -76,7 +70,6 @@ public class JointStatesOutput : MonoBehaviour
             joint6dof = articulationChain6dof[i + 1];
             ArticulationDrive currentDrive = joint6dof.xDrive;
             currentDrive.target = (float)(currPos6dof[i] + 360 * rev6dof[i]);
-            //Debug.Log("Target --> " + currentDrive.target);
             joint6dof.xDrive = currentDrive;
             prevPos6dof[i] = currPos6dof[i];
         }
