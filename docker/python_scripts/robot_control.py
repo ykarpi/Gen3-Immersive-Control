@@ -2,7 +2,7 @@ import rospy
 from std_msgs.msg import Float64MultiArray
 from kinova_moveit_api import KinovaMoveItAPI
 from math import pi
-from std_msgs.msg import String
+from std_msgs.msg import String, Float64
 from geometry_msgs.msg import Pose
 
 class UnityToKinovaControl:
@@ -12,6 +12,7 @@ class UnityToKinovaControl:
         
         self.kinova = KinovaMoveItAPI()
         self.last_joint_positions = None  # Store the last joint positions to compare
+        # self.last_cartesian_pose = None  # Store the last joint positions to compare
         self.last_named_position = None  # Store the last named position to compare
 
         if not self.kinova.is_initialized:
@@ -25,7 +26,9 @@ class UnityToKinovaControl:
         # Subscribe to the Unity topic
         rospy.Subscriber('/unity/my_gen3/joint_positions', Float64MultiArray, self.joint_positions_callback)
         rospy.Subscriber('/unity/my_gen3/named_robot_position', String, self.named_positions_callback)
-        rospy.Subscriber('/unity/my_gen3/cartesian_position', Pose, self.cartesian_position_callback)
+        # rospy.Subscriber('/unity/my_gen3/cartesian_position', Pose, self.cartesian_position_callback)
+        rospy.Subscriber('/unity/my_gen3/gripper', Float64, self.gripper_callback)
+
         
         rospy.loginfo("Node initialized and subscribed to /unity/my_gen3 topics.")
 
@@ -94,32 +97,51 @@ class UnityToKinovaControl:
             rospy.logerr(f"Error while moving the robot to the named position: {e}")
 
 
-    def cartesian_position_callback(self, msg):
-        """Handle Cartesian pose updates."""
-        try:
-            rospy.loginfo("Reaching Cartesian Pose...")
+    def gripper_callback(self, msg):
+        """Callback to handle gripper position from Unity."""
+        gripper_position = msg.data 
+        rospy.loginfo(f"Received gripper position: {gripper_position}")
 
-            # Get the current Cartesian pose
-            actual_pose = self.kinova.get_cartesian_pose()
+        success = self.kinova.reach_gripper_position(gripper_position)
 
-            # Modify the pose based on the received message
-            actual_pose.position.x = msg.position.x
-            actual_pose.position.y = msg.position.y
-            actual_pose.position.z = msg.position.z
-            actual_pose.orientation.x = msg.orientation.x
-            actual_pose.orientation.y = msg.orientation.y
-            actual_pose.orientation.z = msg.orientation.z
-            actual_pose.orientation.w = msg.orientation.w
+        if success:
+            rospy.loginfo("Gripper successfully moved to the specified position.")
+        else:
+            rospy.logwarn("Failed to move the gripper to the specified position.")
 
-            # Move to the new Cartesian pose
-            success = self.kinova.reach_cartesian_pose(pose=actual_pose, tolerance=0.01, constraints=None)
 
-            if success:
-                rospy.loginfo(f"Successfully reached the new Cartesian pose: {actual_pose}")
-            else:
-                rospy.logwarn("Failed to reach the desired Cartesian pose.")
-        except Exception as e:
-            rospy.logerr(f"Error in Cartesian control: {e}")
+
+    # def cartesian_position_callback(self, msg):
+    #     """Handle Cartesian pose updates."""
+    #     try:
+    #         rospy.loginfo("Reaching Cartesian Pose...")
+
+    #         # Get the current Cartesian pose
+    #         actual_pose = self.kinova.get_cartesian_pose()
+
+    #         # Modify the pose based on the received message
+    #         target_pose = Pose()
+    #         target_pose.position.x = msg.position.x
+    #         target_pose.position.y = msg.position.y
+    #         target_pose.position.z = msg.position.z
+    #         target_pose.orientation.x = msg.orientation.x
+    #         target_pose.orientation.y = msg.orientation.y
+    #         target_pose.orientation.z = msg.orientation.z
+    #         target_pose.orientation.w = msg.orientation.w
+
+    #         rospy.loginfo(f"Moving robot to new Cartesian pose: {target_pose}")
+
+    #         # Move to the new Cartesian pose
+    #         success = self.kinova.reach_cartesian_pose(pose=target_pose, tolerance=0.01, constraints=None)
+
+    #         if success:
+    #             rospy.loginfo(f"Successfully reached the new Cartesian pose: {target_pose}")
+    #             self.last_cartesian_pose = target_pose  # Update the last Cartesian pose
+    #         else:
+    #             rospy.logwarn("Failed to reach the desired Cartesian pose.")
+                
+    #     except Exception as e:
+    #         rospy.logerr(f"Error in Cartesian control: {e}")
 
 
 

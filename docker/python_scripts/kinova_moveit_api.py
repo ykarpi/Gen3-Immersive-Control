@@ -65,28 +65,33 @@ class KinovaMoveItAPI(object):
         success = self.arm_group.go(wait=True)
         return success
 
-    def get_cartesian_pose(self):
-        """Retrieve the current Cartesian pose of the arm."""
-        pose = self.arm_group.get_current_pose().pose
-        rospy.loginfo(f"Current Cartesian pose: {pose}")
-        return pose
+    # def get_cartesian_pose(self):
+    #     """Retrieve the current Cartesian pose of the arm."""
+    #     pose = self.arm_group.get_current_pose().pose
+    #     rospy.loginfo(f"Current Cartesian pose: {pose}")
+    #     return pose
 
-    def reach_cartesian_pose(self, pose, tolerance=0.01, constraints=None):
-        """Move the arm to a specified Cartesian pose."""
-        rospy.loginfo("Moving to specified Cartesian pose.")
-        self.arm_group.set_goal_position_tolerance(tolerance)
-        if constraints:
-            self.arm_group.set_path_constraints(constraints)
-        self.arm_group.set_pose_target(pose)
-        success = self.arm_group.go(wait=True)
-        self.arm_group.clear_path_constraints()
-        return success
+    # def reach_cartesian_pose(self, pose, tolerance=0.01, constraints=None):
+    #     """Move the arm to a specified Cartesian pose."""
+    #     rospy.loginfo("Moving to specified Cartesian pose.")
+    #     self.arm_group.set_goal_position_tolerance(tolerance)
+    #     if constraints:
+    #         self.arm_group.set_path_constraints(constraints)
+    #     self.arm_group.set_pose_target(pose)
+    #     success = self.arm_group.go(wait=True)
+    #     self.arm_group.clear_path_constraints()
+    #     return success
 
-    def reach_gripper_position(self, position):
-        """Move the gripper to a specified position."""
-        if not self.is_gripper_present:
-            rospy.logwarn("Gripper not present.")
-            return False
-        self.gripper_group.set_joint_value_target([position])
-        success = self.gripper_group.go(wait=True)
-        return success
+    def reach_gripper_position(self, relative_position):
+        gripper_group = self.gripper_group
+        
+        # We only have to move this joint because all others are mimic!
+        gripper_joint = self.robot.get_joint(self.gripper_joint_name)
+        gripper_max_absolute_pos = gripper_joint.max_bound()
+        gripper_min_absolute_pos = gripper_joint.min_bound()
+        try:
+            val = gripper_joint.move(relative_position * (gripper_max_absolute_pos - gripper_min_absolute_pos) + gripper_min_absolute_pos, True)
+            return val
+        except:
+            return False 
+
