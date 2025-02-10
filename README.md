@@ -20,7 +20,7 @@ This repository contains the official implementation associated with the paper [
 
 This project tackles the challenges of managing and integrating complex cyber-physical systems in robotics, especially in environments with diverse hardware and software dependencies. It introduces a multi-platform framework that combines ROS and Docker, enabling scalable, reproducible software pipelines for robotics applications. The project leverages digital twin technology to simulate and control robots, with a collaborative robot serving as a case study.
 
-THe image below presents the full communications pipeline. On the client side, the Dockerfile specifies how to build the image, while Docker Compose is used to send commands to the Docker daemon to execute the build. If necessary, base layers such as Ubuntu and ROS are pulled From Docker Hub/Registry. Running ``docker-compose up`` directs the Docker Daemon to create and start the container from the built image. The container then launches ROS nodes to enable communication between the Digital Twin, ROS and the physical robot.
+The image below presents the full communications pipeline. On the client side, the Dockerfile specifies how to build the image, while Docker Compose is used to send commands to the Docker daemon to execute the build. If necessary, base layers such as Ubuntu and ROS are pulled From Docker Hub/Registry. Running ``docker-compose up`` directs the Docker Daemon to create and start the container from the built image. The container then launches ROS nodes to enable communication between the Digital Twin, ROS and the physical robot.
 
 <p align="center">
   <img src="media/ROS-Docker/ROS-DOCKER.png" alt="Pipeline overview" style="width: 80%; height: auto;">
@@ -30,7 +30,7 @@ Similarly, we show the general overview of the running ROS network in the contai
 
 On the Digital Twin side, we developed a virtual replica of the Advanced Control and Inteligent Systems (ACIS) lab at the University of Victoria with the model of Kinova Gen3 as the case study. A simple UI and VR-based interactions are implemented to create an immersive user experience. The current implementation allows users to send the robot to predefined positions, activate the emergency stop, clear faults, control the gripper, and access the camera feed from the robot's onboard camera. Additionally, users can enable manual control, which disconnects the robot from the physical system, allowing them to preview joint-based control positions before sending the commands to the physical robot.
 
-The video demonstration of the developed digital twin based on the ROS-Docker framework:
+## Video 
 <p  align="center">
     <a href="https://www.youtube.com/" target="_blank">
         <img src="media/Unity VR/Kinova-VR.png" alt="Video DEMO" style="width: 80%;" />
@@ -39,7 +39,7 @@ The video demonstration of the developed digital twin based on the ROS-Docker fr
 
 
 ## Installation
-Please use the main branch when cloning the repository, as other branches are currently under development. The pipeline has been fully developed and tested on a Windows 10 machine. The current implementation supports only the connection and control of the physical robot; in-simulation (Gazebo) support will be added in the future.
+Please use the main branch when cloning the repository, as other branches are currently under development. The pipeline has been fully developed and tested on a Windows 10 machine. The current implementation supports only the connection and control of the physical robot; in-simulation ([Gazebo](https://github.com/Kinovarobotics/ros_kortex/tree/noetic-devel/kortex_gazebo)) support will be added in the future.
 
 **Setup technologies:**
 Since we utilize Docker for creating a containarized environment, the project requires an installation only of Docker and Unity game engine. For running RViz on Windows machine, also an X server is needed, and we explain it in the Display forwarding section.
@@ -121,7 +121,7 @@ Upon installaton, open the application, and you may experiment with different se
 
 
 #### Docker commands
-We list some of the basic Docker command below as these might come in handy when working with Docker images/containers. All commands are executed from the windowds terminal.
+We list some of the basic Docker command below as these might come in handy when working with Docker images/containers. All commands are executed from the windows terminal.
 
 (i) To check all exiting containers:
 ```shell
@@ -157,9 +157,6 @@ docker images
 ```shell
 docker rmi IMAGE_ID
 ```
-
-## RViz Control
-
 
 ## TODO list:
 - [x] Manual joint-based control in Unity
