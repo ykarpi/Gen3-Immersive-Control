@@ -170,10 +170,12 @@ public class KinovaManualJointControl : MonoBehaviour
             jointStateMsg.data[i] = 0; // Populate with joint angles
         }
 
-        Debug.Log("Publishing the jointStateMsg --> " + jointStateMsg.data);
+       // Debug.Log("Publishing the jointStateMsg --> " + jointStateMsg.data);
 
         // Publish the joint state message
         rosConnection.Publish(publishJointsToGen3, jointStateMsg);
+
+        isSynchronized = true;
     }
 
 
@@ -214,7 +216,7 @@ public class KinovaManualJointControl : MonoBehaviour
             }
         }
 
-        Debug.Log("Publishing the jointStateMsg --> " + jointStateMsg.data);
+       // Debug.Log("Publishing the jointStateMsg --> " + jointStateMsg.data);
 
         // Publish the joint state message to ROS
         rosConnection.Publish(publishJointsToGen3, jointStateMsg);
