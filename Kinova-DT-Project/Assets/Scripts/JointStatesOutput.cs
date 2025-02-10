@@ -5,6 +5,7 @@ using Unity.Robotics.ROSTCPConnector;
 using Unity.Robotics.ROSTCPConnector.ROSGeometry;
 using Unity.Robotics.UrdfImporter;
 using UnityEngine;
+using System.Linq;
 
 public class JointStatesOutput : MonoBehaviour
 {
@@ -54,10 +55,12 @@ public class JointStatesOutput : MonoBehaviour
         // articulationChain[6] // Bracelet_Link
 
 
-        currPos6dof = (jointMessage.position);
+        currPos6dof = jointMessage.position.Skip(1).ToArray();
+
         for (int i = 0; i < 6; i++)
         {
             currPos6dof[i] = (currPos6dof[i] / Math.PI * 180);
+            Debug.Log("Joint #" + i + " --> " + currPos6dof[i]);
             if (currPos6dof[i] - prevPos6dof[i] > 300)
             {
                 rev6dof[i]--;
