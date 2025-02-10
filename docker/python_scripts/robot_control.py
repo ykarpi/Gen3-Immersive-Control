@@ -50,12 +50,12 @@ class UnityToKinovaControl:
         joint_positions = list(msg.data)
         rospy.loginfo(f"Received joint positions: {joint_positions}")
 
-        joint_positions[0] = 1.248
-        joint_positions[1] = -0.539
-        joint_positions[2] = -1.285
-        joint_positions[3] = 0
-        joint_positions[4] = 1.085
-        joint_positions[5] = -0.14
+        # joint_positions[0] = 1.248
+        # joint_positions[1] = -0.539
+        # joint_positions[2] = -1.285
+        # joint_positions[3] = 0
+        # joint_positions[4] = 1.085
+        # joint_positions[5] = -0.14
 
         # Check if the current joint positions are the same as the last ones
         if self.last_joint_positions == joint_positions:
