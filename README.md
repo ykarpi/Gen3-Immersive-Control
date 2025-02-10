@@ -1,49 +1,72 @@
 # ROS-Docker Framework for Digital Twin Applications
 [Yehor Karpichev](https://scholar.google.com/citations?user=eDsR_O0AAAAJ&hl=en), [Mahmoud Chick Zaouali](https://scholar.google.com/citations?hl=en&user=nYQwIk4AAAAJ), [Todd Charter](https://scholar.google.com/citations?user=7qJcX5IAAAAJ&hl=en), [Homayoun Najjaran](https://scholar.google.com/citations?hl=en&user=HQ7bYVkAAAAJ)
 
-add video demo
-<!-- [![Video DEMO](https://img.youtube.com/vi/AP2FHY7DFlo/maxresdefault.jpg)](https://youtu.be/AP2FHY7DFlo) -->
+This repository contains the official implementation associated with the paper [**"A Deployable and Scalable ROS-Docker Framework for Multi-Platform Digital Twin Applications"**](https://arxiv.org/) (Submitted to IEEE conference). 
 
-This repository contains the official implementation associated with the paper [**"A Deployable and Scalable ROS-Docker Framework for Multi-Platform Digital Twin Applications"**](https://arxiv.org/). 
-<!--
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
     <pre><code>@article{karpichev2025deployable,
   title={A Deployable and Scalable ROS-Docker Framework for Multi-Platform Digital Twin Applications},
   author={Karpichev, Yehor and Chick Zaouali, Mahmoud and Charter, Todd and Najjaran, Homayoun},
-  journal={arXiv preprint arXiv:2312.16084},
+  journal={arXiv preprint TBD},
   year={2025}
 }</code></pre>
   </div>
 </section>
--->
+
 
 ## Overview 
-general overview - what the project is about + how it works
+
+This project tackles the challenges of managing and integrating complex cyber-physical systems in robotics, especially in environments with diverse hardware and software dependencies. It introduces a multi-platform framework that combines ROS and Docker, enabling scalable, reproducible software pipelines for robotics applications. The project leverages digital twin technology to simulate and control robots, with a collaborative robot serving as a case study.
+
+THe image below presents the full communications pipeline. On the client side, the Dockerfile specifies how to build the image, while Docker Compose is used to send commands to the Docker daemon to execute the build. If necessary, base layers such as Ubuntu and ROS are pulled From Docker Hub/Registry. Running ``docker-compose up`` directs the Docker Daemon to create and start the container from the built image. The container then launches ROS nodes to enable communication between the Digital Twin, ROS and the physical robot.
+
+<p align="center">
+  <img src="media/ROS-Docker/ROS-DOCKER.png" alt="Pipeline overview" style="width: 80%; height: auto;">
+</p>
+
+Similarly, we show the general overview of the running ROS network in the container [here](https://github.com/ykarpi/Gen3-Immersive-Control/blob/main/media/ROS-Docker/ROS-Connections.png).
+
+On the Digital Twin side, we developed a virtual replica of the Advanced Control and Inteligent Systems (ACIS) lab at the University of Victoria with the model of Kinova Gen3 as the case study. A simple UI and VR-based interactions are implemented to create an immersive user experience. The current implementation allows users to send the robot to predefined positions, activate the emergency stop, clear faults, control the gripper, and access the camera feed from the robot's onboard camera. Additionally, users can enable manual control, which disconnects the robot from the physical system, allowing them to preview joint-based control positions before sending the commands to the physical robot.
+
+The video demonstration of the developed digital twin based on the ROS-Docker framework:
+<p  align="center">
+    <a href="https://www.youtube.com/" target="_blank">
+        <img src="media/Unity VR/Kinova-VR.png" alt="Video DEMO" style="width: 80%;" />
+    </a>
+</p>
 
 
 ## Installation
-Note: Please use the main branch if you clone the repository, other branches are currently used for development. The pipeline has been developed and tested on the Windows 10 machine.
+Please use the main branch when cloning the repository, as other branches are currently under development. The pipeline has been fully developed and tested on a Windows 10 machine. The current implementation supports only the connection and control of the physical robot; in-simulation (Gazebo) support will be added in the future.
 
 **Setup technologies:**
-Since we utilize Docker for creating a containarized environment, the project required an installation only of Docker and Unity game engine. For running RViz on Windows machine, also an X server is needed, and we explain it in the Display forwarding section.
+Since we utilize Docker for creating a containarized environment, the project requires an installation only of Docker and Unity game engine. For running RViz on Windows machine, also an X server is needed, and we explain it in the Display forwarding section.
 - [Docker](https://www.docker.com/products/docker-desktop/)
 - [Unity](https://unity.com/products/unity-engine)
 
-### Unity
-The implementation includes a virtual replica of the research lab with a the Kinova Gen3 robot model. When utilizing the repository, the project should be complete and ready to go. We recommend using the same Unity version (2021.3.45f), but it should work with other versions as well. 
+The digital twin environment is Unity is developed for VR, and it's tested with Meta Quest 2. Some settings might need to be adjusted for other headsets. You can also preview the demo just from the Unity game window. 
+
+### Unity setup
+The implementation includes a virtual replica of the research lab with a the Kinova Gen3 6DOF robot model. When utilizing the repository, the project should be complete and ready to go. We recommend using the same Unity version (2021.3.45f), but it should work with other versions as well. However, if you choose to use v2022 or above, keep in mind some of the known issues with the URDF importer, like [this](https://discussions.unity.com/t/difficulties-loading-custom-urdf-file-with-urdf-importer/929569).
 
 ### Setup Docker environment:
+We provide `docker-compose` and `Dockerfile`, therefore, make sure to navigate to the docker folder in the cloned repository, and follow the steps below.
+
+Firstly, build an image that includes all required packages: 
 ```shell
 docker-compose build
 ```
-and then:
+
+When the image is built we can launch a container (or multiple containers if required)
+
+Launch a docker container with the `docker-compose up` command (prefered):
 ```shell
 docker-compose up
 ```
 
-Alternatively: after building an image, instead of the "docker-compose up" the following command can be used:
+Alternatively: after building an image, instead of the `docker-compose up` the following command can be used:
 ```shell
 docker run -it -p 10000:10000 IMAGE_NAME /bin/bash
 ```
@@ -56,7 +79,7 @@ Assuming you are in the ~/catkin_workspace envrionment:
 ```shell
 roslaunch kortex_driver kortex_driver.launch ip_address:=192.168.0.10 dof:=6 gripper:=robotiq_2f_85
 ```
-Modify ip address, dof, the gripper, and other arguments to suit a specific model. More details are available in the Kinova [ros_kortex](https://github.com/Kinovarobotics/ros_kortex/tree/noetic-devel/kortex_driver) repo.
+Modify `ip address`, `dof`, `gripper`, and other arguments to suit a specific model. More details are available in the Kinova [ros_kortex](https://github.com/Kinovarobotics/ros_kortex/tree/noetic-devel/kortex_driver) repo.
 
 
 **Kinova Vision:** 
@@ -69,16 +92,16 @@ Our robot has a vision module, and a separate driver from Kinova must be launche
 ```shell
 roslaunch ros_tcp_endpoint endpoint.launch
 ```
-You can add parameter like tcp_ip and tcp_port to specify which you wish to use. The default is tcp_ip=0.0.0.0, and tcp_port=10000. Alternatively, you may edit the endpoint.launch file directly. If port is modified, ensure that a new port is exposed when launch tyhe Docker container. 
+You can add parameters like tcp_ip and tcp_port to specify which you wish to use. The default is `tcp_ip=0.0.0.0`, and `tcp_port=10000`. Alternatively, you may edit the endpoint.launch file directly. If port is modified, ensure that a new port is mapped when launching the Docker container. 
 
 Official github page by Unity-Technologies: [unity-endpoint](https://github.com/Unity-Technologies/ROS-TCP-Endpoint).
 
 
 **Our Python scipt:**
 ```shell
-python src/python_scripts/robot_control.py
+python src/python_scripts/robot_control.py __ns:=my_gen3
 ```
-We've developed a couple custom python scripts that launch a separate ros node & topics for passing the data from the developed Digital Twin to the MoveIt interface for controlling the physical system.
+We've developed a couple custom python scripts that launch a separate ros node & topics for passing the data from the developed Digital Twin to the MoveIt interface for controlling the physical system. Replace `my_gen3` in `__ns:=my_gen3` with a proper name, if you are using a different robot/model.
 
 
 
@@ -93,7 +116,7 @@ export DISPLAY=host.docker.internal:0
 
 Note that in order to make sure that RViz launches and works properly, the installation of an X server is required. In our implementation we used the free distributions of the [VcXsrv Windows X Server](https://sourceforge.net/projects/vcxsrv/)
 
-Upon installaton, open the application, and you may experiment with different setups, however, we recommend the settings indicated in [X Server setup]().
+Upon installaton, open the application, and you may experiment with different setups, however, we recommend the settings indicated in [X Server setup](https://github.com/ykarpi/Gen3-Immersive-Control/tree/main/media/X%20server%20setup).
 
 
 
@@ -135,13 +158,14 @@ docker images
 docker rmi IMAGE_ID
 ```
 
+## RViz Control
+
+
 ## TODO list:
-- [ ] Update docker-compose with entrypoints (and hence replace the launch commands)
+- [x] Manual joint-based control in Unity
+- [ ] Update docker-compose with entrypoints (and hence replace multiple launch commands)
 - [ ] Docker multicontainer distribution (run kortex_vision from a separate container)
-- [ ] Add support for simulation (for when the phsycial robot is not available)
-- [ ] Finalize gripper & virtual twin functionality in Unity
+- [ ] Add support for Gazebo-based simulation
 - [ ] Implement Cartesian-based control for Gen3 in Unity
 - [ ] Add ROS2 implementation
-
-
 
