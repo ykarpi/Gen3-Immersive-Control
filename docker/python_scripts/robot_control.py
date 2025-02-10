@@ -8,7 +8,7 @@ from geometry_msgs.msg import Pose
 class UnityToKinovaControl:
     def __init__(self):
         """Initialize the node and robot control interface."""
-        rospy.init_node('unity_joint_position_listener', anonymous=True)
+        rospy.init_node('unity_to_gen3', anonymous=False)
         
         self.kinova = KinovaMoveItAPI()
         self.last_joint_positions = None  # Store the last joint positions to compare
