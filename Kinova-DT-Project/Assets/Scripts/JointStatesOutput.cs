@@ -55,7 +55,7 @@ public class JointStatesOutput : MonoBehaviour
         // articulationChain[6] // Bracelet_Link
 
 
-        currPos6dof = jointMessage.position.Skip(1).ToArray();
+        currPos6dof = (jointMessage.position); 
 
         for (int i = 0; i < 6; i++)
         {
