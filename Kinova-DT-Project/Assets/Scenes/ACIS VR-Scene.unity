@@ -14185,28 +14185,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 950370173}
-  - component: {fileID: 950370172}
   - component: {fileID: 950370174}
+  - component: {fileID: 950370175}
   m_Layer: 0
-  m_Name: Get Joints from Kinova
+  m_Name: Joints from Kinova
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &950370172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950370171}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d54301e57833ed4b8af819552f8e029, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  kinova6dof: {fileID: 1361868431}
 --- !u!4 &950370173
 Transform:
   m_ObjectHideFlags: 0
@@ -14232,6 +14219,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82b583e351b431a499ba9cfd7140708b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kinova6dof: {fileID: 1361868431}
+  jointSliders:
+  - {fileID: 872203274}
+  - {fileID: 1279258138}
+  - {fileID: 1681747733}
+  - {fileID: 1936339838}
+  - {fileID: 1288555357}
+  - {fileID: 960647071}
+  syncOff: {fileID: 1694608237}
+  syncOn: {fileID: 639038425}
+  publishAllToZeroButton: {fileID: 1747088345}
+  publishCurrentJoints: {fileID: 139663765}
+--- !u!114 &950370175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950370171}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7ae9beef11bbd94a9a9415da58af323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   kinova6dof: {fileID: 1361868431}
