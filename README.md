@@ -31,6 +31,7 @@ Similarly, we show the general overview of the running ROS network in the contai
 On the Digital Twin side, we developed a virtual replica of the Advanced Control and Inteligent Systems (ACIS) lab at the University of Victoria with the model of Kinova Gen3 as the case study. A simple UI and VR-based interactions are implemented to create an immersive user experience. The current implementation allows users to send the robot to predefined positions, activate the emergency stop, clear faults, control the gripper, and access the camera feed from the robot's onboard camera. Additionally, users can enable manual control, which disconnects the robot from the physical system, allowing them to preview joint-based control positions before sending the commands to the physical robot.
 
 ## Video 
+(coming soon)
 <p  align="center">
     <a href="https://www.youtube.com/" target="_blank">
         <img src="media/Unity VR/Kinova-VR.png" alt="Video DEMO" style="width: 80%;" />
@@ -39,10 +40,10 @@ On the Digital Twin side, we developed a virtual replica of the Advanced Control
 
 
 ## Installation
-Please use the main branch when cloning the repository, as other branches are currently under development. The pipeline has been fully developed and tested on a Windows 10 machine. Furthermore, we provide setup instructions with utilizing [Gazebo](#gazebo-simulation) for when the physical arm is not accessible.
+Please use the main branch when cloning the repository, as other branches are currently under development. The pipeline has been fully developed and tested on a **Windows 10 machine**. Furthermore, we provide setup instructions with utilizing [Gazebo](#gazebo-simulation) for when the physical arm is not accessible.
 
 **Setup technologies:**
-Since we utilize Docker for creating a containarized environment, the project requires an installation only of Docker and Unity game engine. For running RViz on Windows machine, also an X server is needed, and we explain it in the Display forwarding section.
+Since we utilize Docker for creating a containarized environment, the project requires an installation only of Docker and Unity game engine. For running RViz on Windows machine, also an X server is needed, and we explain it in the [Display forwarding](#display-forwarding) section.
 - [Docker](https://www.docker.com/products/docker-desktop/)
 - [Unity](https://unity.com/products/unity-engine)
 
@@ -71,7 +72,7 @@ Alternatively: after building an image, instead of the `docker-compose up` the f
 docker run -it -p 10000:10000 IMAGE_NAME /bin/bash
 ```
 
-### Launch commands:
+## Launch commands:
 After you've statrted your container, multiple launch commands must be run to a) start the robot driver & the vision module, b) run the unity endpoint, and c) run the scripts for starting a custom ros node for the data flow from the DT environment.
 
 Assuming you are in the ~/catkin_workspace envrionment: 
@@ -106,7 +107,7 @@ We've developed a couple custom python scripts that launch a separate ros node &
 
 
 
-### Display Forwarding
+## Display Forwarding
 
 Display forwarding is needed in order to run the Linux-native applications on the windows host machine. For example, we run and control the robot from RViz. The config line regarding the display forwarding is added as part of the docker-compose to ensure that applications like RViz and Gazebo will run smoothly. 
 
@@ -121,7 +122,7 @@ Upon installaton, open the application, and you may experiment with different se
 
 
 
-### Docker commands
+## Docker commands
 We list some of the basic Docker command below as these might come in handy when working with Docker images/containers. All commands are executed from the windows terminal.
 
 (i) To check all exiting containers:
