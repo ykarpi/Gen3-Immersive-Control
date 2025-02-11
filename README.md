@@ -9,7 +9,7 @@ This repository contains the official implementation associated with the paper [
     <pre><code>@article{karpichev2025deployable,
   title={A Deployable and Scalable ROS-Docker Framework for Multi-Platform Digital Twin Applications},
   author={Karpichev, Yehor and Chick Zaouali, Mahmoud and Charter, Todd and Najjaran, Homayoun},
-  journal={arXiv preprint TBD},
+  journal={arXiv TBD},
   year={2025}
 }</code></pre>
   </div>
@@ -39,7 +39,7 @@ On the Digital Twin side, we developed a virtual replica of the Advanced Control
 
 
 ## Installation
-Please use the main branch when cloning the repository, as other branches are currently under development. The pipeline has been fully developed and tested on a Windows 10 machine. The current implementation supports only the connection and control of the physical robot; in-simulation ([Gazebo](https://github.com/Kinovarobotics/ros_kortex/tree/noetic-devel/kortex_gazebo)) support will be added in the future.
+Please use the main branch when cloning the repository, as other branches are currently under development. The pipeline has been fully developed and tested on a Windows 10 machine. Furthermore, we provide setup instructions with utilizing [Gazebo](#gazebo-simulation) for when the physical arm is not accessible.
 
 **Setup technologies:**
 Since we utilize Docker for creating a containarized environment, the project requires an installation only of Docker and Unity game engine. For running RViz on Windows machine, also an X server is needed, and we explain it in the Display forwarding section.
@@ -51,7 +51,7 @@ The digital twin environment is Unity is developed for VR, and it's tested with 
 ### Unity setup
 The implementation includes a virtual replica of the research lab with a the Kinova Gen3 6DOF robot model. When utilizing the repository, the project should be complete and ready to go. We recommend using the same Unity version (2021.3.45f), but it should work with other versions as well. However, if you choose to use v2022 or above, keep in mind some of the known issues with the URDF importer, like [this](https://discussions.unity.com/t/difficulties-loading-custom-urdf-file-with-urdf-importer/929569).
 
-### Setup Docker environment:
+### Docker environment:
 We provide `docker-compose` and `Dockerfile`, therefore, make sure to navigate to the docker folder in the cloned repository, and follow the steps below.
 
 Firstly, build an image that includes all required packages: 
@@ -70,6 +70,7 @@ Alternatively: after building an image, instead of the `docker-compose up` the f
 ```shell
 docker run -it -p 10000:10000 IMAGE_NAME /bin/bash
 ```
+
 ### Launch commands:
 After you've statrted your container, multiple launch commands must be run to a) start the robot driver & the vision module, b) run the unity endpoint, and c) run the scripts for starting a custom ros node for the data flow from the DT environment.
 
@@ -120,7 +121,7 @@ Upon installaton, open the application, and you may experiment with different se
 
 
 
-#### Docker commands
+### Docker commands
 We list some of the basic Docker command below as these might come in handy when working with Docker images/containers. All commands are executed from the windows terminal.
 
 (i) To check all exiting containers:
@@ -158,11 +159,62 @@ docker images
 docker rmi IMAGE_ID
 ```
 
+## Gazebo Simulation
+
+If the physical robot model is not present, the project can be executed with a simulated arm in Gazebo.
+
+<div align="center" style="display: flex; justify-content: center; gap: 100px;">
+  <img src="https://github.com/ykarpi/Gen3-Immersive-Control/blob/gazebo-support/media/Gazebo/gif/Gen3-Gazebo.gif" 
+       alt="Gazebo simulation" width="400">
+  <img src="https://github.com/ykarpi/Gen3-Immersive-Control/blob/gazebo-support/media/Gazebo/gif/Kinova-RViz-Gazebo-simulation.gif" 
+       alt="RViz control for Gazebo simulation" width="400">
+</div>
+
+
+<!--
+<p align="center">
+  <img src="https://github.com/ykarpi/Gen3-Immersive-Control/blob/gazebo-support/media/Gazebo/gif/Gen3-Gazebo.gif" alt="Gazebo simulation">
+</p>
+
+<p align="center">
+  <img src="https://github.com/ykarpi/Gen3-Immersive-Control/blob/gazebo-support/media/Gazebo/gif/Kinova-RViz-Gazebo-simulation.gif" alt="RViz control for Gazebo simulation">
+</p>
+-->
+
+### Launch commands with simulated arm
+
+Assuming you've started the docker container, and currently in `~/catkin_environment`, the following commands should be executed:
+
+**Gazebo Kinova Driver:**
+```shell
+roslaunch kortex_gazebo spawn_kortex_robot.launch arm:=gen3 dof:=6 gripper:=robotiq_2f_85
+```
+More info on the gazebo implementation and kortex control at the Kinova's official [github](https://github.com/Kinovarobotics/ros_kortex/tree/noetic-devel/kortex_gazebo). Unfortunately, there is no possibility to simulate the vision module without the physical model.
+
+**Unity Endpoint:**
+```shell
+roslaunch ros_tcp_endpoint endpoint.launch
+```
+
+**Python scipt:**
+```shell
+python src/python_scripts/robot_control.py __ns:=my_gen3
+```
+
+#### Unity settings for simulated arm
+The topic `/joint_states` publishes data in a slightly different format, therefore, Unity scripts were adjusted to take this into account. In the project's hierarchy, under the `Robot Gen3 --> Gen3 Scripts --> Joints from Kinova` gameobject, only one of the scripts should be active: either `KinovaManualJointControl` (for working with the physical system) OR `GazeboSimManualJointControl` (if you run the project with a simulated arm).
+
+
+<p align="center">
+  <img src="media/Gazebo/Unity-setting-for-Gazebo.png" alt="Gazebo script in Unity overview" style="width: 50%; height: auto;">
+</p>
+
+
 ## TODO list:
 - [x] Manual joint-based control in Unity
+- [x] Add support for Gazebo-based simulation
 - [ ] Update docker-compose with entrypoints (and hence replace multiple launch commands)
 - [ ] Docker multicontainer distribution (run kortex_vision from a separate container)
-- [ ] Add support for Gazebo-based simulation
 - [ ] Implement Cartesian-based control for Gen3 in Unity
 - [ ] Add ROS2 implementation
 
