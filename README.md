@@ -1,19 +1,9 @@
 # ROS-Docker Framework for Digital Twin Applications
 [Yehor Karpichev](https://scholar.google.com/citations?user=eDsR_O0AAAAJ&hl=en), [Mahmoud Chick Zaouali](https://scholar.google.com/citations?hl=en&user=nYQwIk4AAAAJ), [Todd Charter](https://scholar.google.com/citations?user=7qJcX5IAAAAJ&hl=en), [Homayoun Najjaran](https://scholar.google.com/citations?hl=en&user=HQ7bYVkAAAAJ)
 
+<!--
 This repository contains the official implementation associated with the paper [**"A Deployable and Scalable ROS-Docker Framework for Multi-Platform Digital Twin Applications"**](https://arxiv.org/) (Submitted to IEEE conference). 
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@article{karpichev2025deployable,
-  title={A Deployable and Scalable ROS-Docker Framework for Multi-Platform Digital Twin Applications},
-  author={Karpichev, Yehor and Chick Zaouali, Mahmoud and Charter, Todd and Najjaran, Homayoun},
-  journal={arXiv TBD},
-  year={2025}
-}</code></pre>
-  </div>
-</section>
+-->
 
 
 ## Overview 
