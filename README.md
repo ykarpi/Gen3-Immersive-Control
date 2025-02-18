@@ -21,9 +21,8 @@ Similarly, we show the general overview of the running ROS network in the contai
 On the Digital Twin side, we developed a virtual replica of the Advanced Control and Inteligent Systems (ACIS) lab at the University of Victoria with the model of Kinova Gen3 as the case study. A simple UI and VR-based interactions are implemented to create an immersive user experience. The current implementation allows users to send the robot to predefined positions, activate the emergency stop, clear faults, control the gripper, and access the camera feed from the robot's onboard camera. Additionally, users can enable manual control, which disconnects the robot from the physical system, allowing them to preview joint-based control positions before sending the commands to the physical robot.
 
 ## Video 
-(coming soon)
 <p  align="center">
-    <a href="https://www.youtube.com/" target="_blank">
+    <a href="https://www.youtube.com/shorts/0D1qwkBagmg" target="_blank">
         <img src="media/Unity VR/Kinova-VR.png" alt="Video DEMO" style="width: 80%;" />
     </a>
 </p>
