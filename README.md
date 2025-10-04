@@ -192,11 +192,3 @@ The topic `/joint_states` publishes data in a slightly different format, therefo
 </p>
 
 
-## TODO list:
-- [x] Manual joint-based control in Unity
-- [x] Add support for Gazebo-based simulation
-- [ ] Update docker-compose with entrypoints (and hence replace multiple launch commands)
-- [ ] Docker multicontainer distribution (run kortex_vision from a separate container)
-- [ ] Implement Cartesian-based control for Gen3 in Unity
-- [ ] Add ROS2 implementation
-
