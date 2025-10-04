@@ -1,20 +1,3 @@
-# ROS-Docker Framework for Digital Twin Applications
-[Yehor Karpichev](https://scholar.google.com/citations?user=eDsR_O0AAAAJ&hl=en), [Mahmoud Chick Zaouali](https://scholar.google.com/citations?hl=en&user=nYQwIk4AAAAJ), [Todd Charter](https://scholar.google.com/citations?user=7qJcX5IAAAAJ&hl=en), [Homayoun Najjaran](https://scholar.google.com/citations?hl=en&user=HQ7bYVkAAAAJ)
-
-
-This repository contains the official implementation associated with the paper [**"A Deployable and Scalable ROS-Docker Framework for Multi-Platform Digital Twin Applications"**](https://www.techrxiv.org/users/909247/articles/1283281-a-deployable-and-scalable-ros-docker-framework-for-multi-platform-digital-twin-applications) (Submitted to IEEE conference). 
-
-```
-@article{karpichev2025deployable,
-  title={A Deployable and Scalable ROS Docker Framework for Multi-Platform Digital Twin Applications},
-  author={Karpichev, Yehor and Zaouali, Mahmoud Chick and Charter, Todd and Najjaran, Homayoun},
-  journal={TechRxiv},
-  year={2025},
-  note={Preprint}
-}
-```
-
-
 ## Overview 
 
 This project tackles the challenges of managing and integrating complex cyber-physical systems in robotics, especially in environments with diverse hardware and software dependencies. It introduces a multi-platform framework that combines ROS and Docker, enabling scalable, reproducible software pipelines for robotics applications. The project leverages digital twin technology to simulate and control robots, with a collaborative robot serving as a case study.
